@@ -1,25 +1,19 @@
-<dx-button
-    text="Click me"
-    (onClick)="helloWorld($event)">
-</dx-button>
 
-<!-- <dx-data-grid
+<dx-data-grid
   id="gridContainer"
-  [dataSource]="employees"
+  [dataSource]="users"
   keyExpr="ID"
   [showBorders]="true"
 >
-  <dxi-column dataField="Prefix" [width]="70" caption="Title"></dxi-column>
-  <dxi-column dataField="FirstName"></dxi-column>
-  <dxi-column dataField="LastName"></dxi-column>
-  <dxi-column dataField="Position" [width]="170"></dxi-column>
-  <dxi-column dataField="State" [width]="125"></dxi-column>
-  <dxi-column dataField="BirthDate" dataType="date"></dxi-column>
-  <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+  <dxi-column dataField="picture.thumbnail" [width]="70" caption="Photo"></dxi-column>
+  <dxi-column dataField="name.first" caption="Name"></dxi-column>
+  <dxi-column dataField="gender" [width]="125"caption="Gender"></dxi-column>
+  <dxi-column dataField="phone" dataType="date"caption="Phone"></dxi-column>
+  <dxo-master-detail [enabled]="true" template="detail"caption="Photo"></dxo-master-detail>
   <div *dxTemplate="let employee of 'detail'">
     <div class="master-detail-caption">{{
-      employee.data.FirstName + " " + employee.data.LastName + "'s Tasks:"
+      employee.data.FirstName + " " + employee.data.LastName + " details"
     }}</div>
-    <detail-grid [key]="employee.key"></detail-grid>
+    <!-- <detail-grid [key]="employee.key"></detail-grid> -->
   </div>
-</dx-data-grid> -->
+</dx-data-grid>
