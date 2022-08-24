@@ -1,19 +1,28 @@
-
+<app-filter></app-filter>
 <dx-data-grid
-  id="gridContainer"
-  [dataSource]="users"
-  keyExpr="ID"
+  [dataSource]="users | prepareUser"
   [showBorders]="true"
+  [showRowLines]="true"
+  [showColumnLines]="false"
 >
-  <dxi-column dataField="picture.thumbnail" [width]="70" caption="Photo"></dxi-column>
-  <dxi-column dataField="name.first" caption="Name"></dxi-column>
-  <dxi-column dataField="gender" [width]="125"caption="Gender"></dxi-column>
-  <dxi-column dataField="phone" dataType="date"caption="Phone"></dxi-column>
-  <dxo-master-detail [enabled]="true" template="detail"caption="Photo"></dxo-master-detail>
-  <div *dxTemplate="let employee of 'detail'">
-    <div class="master-detail-caption">{{
-      employee.data.FirstName + " " + employee.data.LastName + " details"
-    }}</div>
-    <!-- <detail-grid [key]="employee.key"></detail-grid> -->
+
+  <dxo-pager
+    [showInfo]="true"
+    [showNavigationButtons]="true"
+  >
+  </dxo-pager>
+  <dxo-paging [pageSize]="25"> </dxo-paging>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+
+  <dxi-column *ngFor="let field of (fieldsFromLS | gotTrues) | keyvalue: keyDescOrder"  dataField="{{field.key}}">{{field.key}}</dxi-column>
+  <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+  <div *dxTemplate="let info of 'detail'">
+
+    <span class="master-detail-caption">{{
+      info.data.name + " details "
+    }}</span>
+    <!-- <detail-grid [data]="info.data"></detail-grid> -->
+    <span>{{info.data.location + " " + info.data.email}}</span>
   </div>
 </dx-data-grid>

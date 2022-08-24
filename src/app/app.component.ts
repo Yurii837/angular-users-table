@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Info, User, UsersService } from './services/users.service';
+import { UsersService } from './services/users.service';
+import DataSource from 'devextreme/data/data_source';
 
 @Component({
   selector: 'app-root',
@@ -10,33 +11,35 @@ export class AppComponent implements OnInit {
   title = 'angular-users-table';
   users: User[];
 
+  fieldsFromLS = JSON.parse(localStorage.getItem('fields') || '{}')
+
   defaultUser: User= {
-    gender: "male",
+    gender: "Default",
     "name": {
-        "title": "Mr",
+        "title": "Default",
         "first": "Default",
-        "last": "Lemoine"
+        "last": "Default"
     },
     "location": {
         "street": {
-            "number": 9272,
-            "name": "Rue du Moulin"
+            "number": 0,
+            "name": "Default"
         },
-        "city": "Clermont-Ferrand",
-        "state": "Pyrénées-Orientales",
-        "country": "France",
-        "postcode": 60321,
+        "city": "Default",
+        "state": "Default",
+        "country": "Default",
+        "postcode": 0,
         "coordinates": {
-            "latitude": "-18.5642",
-            "longitude": "-104.4990"
+            "latitude": "Default",
+            "longitude": "Default"
         },
         "timezone": {
-            "offset": "-4:00",
-            "description": "Atlantic Time (Canada), Caracas, La Paz"
+            "offset": "Default",
+            "description": "Default"
         }
     },
-    "email": "johan.lemoine@example.com",
-    "phone": "04-49-09-24-80",
+    "email": "Default",
+    "phone": "Default",
     "picture": {
         "large": "https://randomuser.me/api/portraits/men/56.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/56.jpg",
@@ -46,10 +49,17 @@ export class AppComponent implements OnInit {
 
   info?: Info;
 
+  dataSource: DataSource;
+
   constructor(private service: UsersService) {
     this.users = [this.defaultUser];
-    // this.info
+    this.dataSource = new DataSource({})
   }
+
+  filter() {
+    console.log('ok')
+    this.dataSource.load();
+}
 
   ngOnInit(): void {
     this.service.getResponce()
@@ -58,4 +68,9 @@ export class AppComponent implements OnInit {
       this.info = responce.info
     })
   }
+
+  keyDescOrder (): number {
+    return 0;
+  }
+
 }

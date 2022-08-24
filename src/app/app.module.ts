@@ -1,17 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-// import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 // import { DxButtonModule } from 'devextreme-angular';
 import { DxDataGridModule, DxTemplateModule } from 'devextreme-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FilterComponent } from './components/filter/filter.component';
+import { GotTruesPipe } from './pipes/got-trues.pipe';
+import { PrepareUserPipe } from './pipes/prepare-user.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // declarations: [AppComponent, DetailGridComponent],
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FilterComponent,
+    GotTruesPipe,
+    PrepareUserPipe
   ],
   imports: [
     BrowserModule,
@@ -19,7 +26,8 @@ import { AppComponent } from './app.component';
     // DxButtonModule,
     DxDataGridModule,
     DxTemplateModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   // declarations: [AppComponent, DetailGridComponent],
   providers: [],
@@ -27,4 +35,4 @@ import { AppComponent } from './app.component';
 })
 export class AppModule { }
 
-// platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule);
