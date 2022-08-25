@@ -4,6 +4,7 @@
   [showBorders]="true"
   [showRowLines]="true"
   [showColumnLines]="false"
+  [columnAutoWidth]="true"
 >
 
   <dxo-pager
@@ -15,14 +16,43 @@
   <dxo-filter-row [visible]="true"></dxo-filter-row>
   <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-  <dxi-column *ngFor="let field of (fieldsFromLS | gotTrues) | keyvalue: keyDescOrder"  dataField="{{field.key}}">{{field.key}}</dxi-column>
+  <dxi-column 
+    *ngFor="let field of (fieldsFromLS | gotTrues) | keyvalue: keyDescOrder"  
+    dataField="{{field.key}}"
+  
+    [width]="field.key === 'index' ? 30 : null"
+    [cellTemplate]="field.key === 'picture' ? 'pictureTemplate' : field.key === 'index' ? 'indexTemplate' : null"
+    [customizeText]="field.key === 'location' && filteringLocation"
+
+  >
+    {{field.key}}
+  </dxi-column>
+
+  <div *dxTemplate="let data of 'pictureTemplate'">
+    <img [src]="data.value" />
+  </div>
+
+  <div *dxTemplate="let data of 'indexTemplate'">
+    <div class="index">
+      {{data.text}}
+    </div>
+  </div>
+  
   <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
   <div *dxTemplate="let info of 'detail'">
 
-    <span class="master-detail-caption">{{
-      info.data.name + " details "
-    }}</span>
-    <!-- <detail-grid [data]="info.data"></detail-grid> -->
-    <span>{{info.data.location + " " + info.data.email}}</span>
+    <span class="master-detail-caption">{{info.data.name + " details: "}}</span>
+    <span *ngIf="info.data.location">
+      <span class="master-detail-caption">
+        City, street: 
+      </span>{{filteringLocationInfo(info.data.location)}}
+    </span>
+
+    <span>
+      <span class="master-detail-caption">
+        Email: 
+      </span>
+      {{info.data.email}}
+    </span>
   </div>
 </dx-data-grid>

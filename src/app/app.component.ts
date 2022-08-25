@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './services/users.service';
 import DataSource from 'devextreme/data/data_source';
+import { defaultUser } from './Modes/defaultFields';
 
 @Component({
   selector: 'app-root',
@@ -10,56 +11,14 @@ import DataSource from 'devextreme/data/data_source';
 export class AppComponent implements OnInit {
   title = 'angular-users-table';
   users: User[];
-
   fieldsFromLS = JSON.parse(localStorage.getItem('fields') || '{}')
-
-  defaultUser: User= {
-    gender: "Default",
-    "name": {
-        "title": "Default",
-        "first": "Default",
-        "last": "Default"
-    },
-    "location": {
-        "street": {
-            "number": 0,
-            "name": "Default"
-        },
-        "city": "Default",
-        "state": "Default",
-        "country": "Default",
-        "postcode": 0,
-        "coordinates": {
-            "latitude": "Default",
-            "longitude": "Default"
-        },
-        "timezone": {
-            "offset": "Default",
-            "description": "Default"
-        }
-    },
-    "email": "Default",
-    "phone": "Default",
-    "picture": {
-        "large": "https://randomuser.me/api/portraits/men/56.jpg",
-        "medium": "https://randomuser.me/api/portraits/med/men/56.jpg",
-        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/56.jpg"
-    }
-}
-
   info?: Info;
-
   dataSource: DataSource;
 
   constructor(private service: UsersService) {
-    this.users = [this.defaultUser];
-    this.dataSource = new DataSource({})
+    this.users = [defaultUser];
+    this.dataSource = new DataSource({});
   }
-
-  filter() {
-    console.log('ok')
-    this.dataSource.load();
-}
 
   ngOnInit(): void {
     this.service.getResponce()
@@ -73,4 +32,17 @@ export class AppComponent implements OnInit {
     return 0;
   }
 
+  filteringLocation (cellInfo: { value: string; }) {
+     const arr = cellInfo.value.split(' ');
+     const filtered = arr.filter(e => e && e !== '\n');
+     const short = [filtered[0], filtered[1], filtered[2]];
+     return short.join(', ');
+  }
+
+  filteringLocationInfo (cellInfo: string) {
+    const arr = cellInfo.split(' ');
+     const filtered = arr.filter(e => e && e !== '\n');
+     const short = [filtered[filtered.length - 3], filtered[filtered.length - 2], filtered[filtered.length - 1]];
+     return short.join(', '); 
+  }
 }

@@ -22,9 +22,9 @@ export class UsersService {
     return res;
   }
 
-  incProp = this.convertToHttpString(JSON.parse(localStorage.getItem('fields') || '{}'))
+  incProp = this.convertToHttpString(JSON.parse(localStorage.getItem('fields') || '{}'));
 
   getResponce(): Observable<ServerResponce> {
-    return this.http.get<ServerResponce>(`https://randomuser.me/api/?results=100&seed=abc&inc=${this.incProp}`)
+    return this.http.get<ServerResponce>(`https://randomuser.me/api/?results=100&seed=abc&inc=${this.incProp}`);
   }
 }
