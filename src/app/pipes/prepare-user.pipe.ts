@@ -5,14 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PrepareUserPipe implements PipeTransform {
 
-  transform(users: User[]): any {
+  transform(users: User[]): User[] {
     const usersCopy = [...users]
     let index = 0;
 
     usersCopy.forEach((user: any) => {
       index++;
       for (const key in user) {
-        user.index = index;
+        user.index = String(index);
 
         switch (key) {
           case 'name': user[key] = `${user[key].first} ${user[key].last}`

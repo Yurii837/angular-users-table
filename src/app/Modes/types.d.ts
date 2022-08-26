@@ -7,6 +7,7 @@ interface PreparedUser {
 }
 
 interface User {
+  index?: string
   "gender": string,
   "name": {
       "title": string,
@@ -15,14 +16,14 @@ interface User {
   },
   "location": {
     "street": {
-      "number"?: number,
+      "number": number,
       "name": string
     },
     "city": string,
-    "state"?: string,
-    "country"?: string,
-    "postcode"?: number,
-    "coordinates"?: {
+    "state": string,
+    "country": string,
+    "postcode": number,
+    "coordinates": {
       "latitude": string,
       "longitude": string
     },

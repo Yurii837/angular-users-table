@@ -10,7 +10,9 @@ export class FilterComponent implements OnInit {
 
   fieldsFromLS: Fields = {};  
 
-  constructor() { }
+  constructor() {
+
+   }
 
   ngOnInit(): void {
     this.fieldsFromLS = Object.keys(JSON.parse(localStorage.getItem('fields') || '{}')).length > 0

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, retry } from 'rxjs';
+import { fields } from '../Modes/defaultFields';
 
 
 @Injectable({
@@ -22,9 +23,14 @@ export class UsersService {
     return res;
   }
 
-  incProp = this.convertToHttpString(JSON.parse(localStorage.getItem('fields') || '{}'));
+  incProp = Object.keys(JSON.parse(localStorage.getItem('fields') || '{}')).length > 0 
+    ? this.convertToHttpString(JSON.parse(localStorage.getItem('fields') || '{}'))
+    : this.convertToHttpString(fields)
 
   getResponce(): Observable<ServerResponce> {
-    return this.http.get<ServerResponce>(`https://randomuser.me/api/?results=100&seed=abc&inc=${this.incProp}`);
+    return this.http.get<ServerResponce>(`https://randomuser.me/api/?results=100&seed=abc&inc=${this.incProp}`)
+    .pipe(
+      retry(3),
+    )
   }
 }
